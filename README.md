@@ -1,7 +1,4 @@
-# CarND-Path-Planning-Project Reflection
-
-
-## The code model for generating paths is described in detail.
+# The code model for generating paths is described in detail.
 
 The model for generating vehicle paths follows the path planning project walkthrough. The drive track is a loop made of sparse waypoints, so there are places on the track where the waypoints tend to get bunched up which then cause acceleration and jerk issues when the path planning model just uses the regular X,Y track coordinates. 
 Instead of using the regular X,Y coordinates, S,D coordinates, also known as Frenet coordinates, is used. The S indicates the logitudinal displacement along the road and D indicates the lateral displacement from the yellow middle line. To minimize the jerk issues, spline is used to smoothly connect the waypoints(usage of anchor points as discussed in the walkthrough), resulting in smooth vehicle path.
