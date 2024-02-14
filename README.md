@@ -1,23 +1,34 @@
-# The Code Model
-![image](https://github.com/kangcshin/Path-Planning/blob/master/Screenshot_from_2017-08-15_15-00-37.png)
-### Track
-The drive track is a loop made of sparse waypoints, so there are places on the track where the waypoints tend to get bunched up which then cause acceleration and jerk issues when the path planning model just uses the regular X,Y track coordinates. 
-### Coordinates
-Instead of using the regular X,Y coordinates, S,D coordinates, also known as **Frenet coordinates**, is used. 
-The S indicates the logitudinal displacement along the road and D indicates the lateral displacement from the yellow middle line. 
-### Smoothing movements
-To minimize the jerk issues, **spline** is used to smoothly connect the waypoints(usage of anchor points as discussed in the walkthrough), resulting in smooth vehicle path.
+# The Code Model for Path Planning
+> Advanced path planning for autonomous vehicles using Frenet coordinates and spline interpolation.
+
+This project demonstrates a sophisticated path planning system designed to navigate a vehicle around a track using sparse waypoints, sensor fusion data, and smooth trajectory generation. By employing Frenet coordinates and spline interpolation, the model addresses common issues like acceleration and jerk, ensuring smooth and efficient vehicle motion.
+
+![Path Planning Visualization](https://github.com/kangcshin/Path-Planning/blob/master/Screenshot_from_2017-08-15_15-00-37.png)
+
+### Track Complexity
+The drive track is designed as a loop with varying densities of waypoints, posing unique challenges for maintaining consistent velocity and minimizing jerk due to the uneven distribution of track coordinates.
+
+### Frenet Coordinates
+Utilizing **Frenet coordinates** for navigation, the model distinguishes between longitudinal displacement (S) and lateral displacement (D) from the track's center, enabling more nuanced control over the vehicle's position and movements.
+
+### Smoothing Movements
+**Spline interpolation** is applied to connect waypoints smoothly, preventing abrupt changes in acceleration and direction that could lead to jerkiness, thus enhancing the comfort and safety of the vehicle's path.
+
 ### Generating Drive Path
-To actually generate the vehicle path, the model uses sensor fusion data. 
-The incoming data includes other vehicles and their positions in reference to time. 
-Reference velocity of the target vehicle is determined by presence of other vehicles in front of the target vehicle. 
+The path generation process leverages **sensor fusion data**, incorporating information about the positions and velocities of surrounding vehicles. This data informs decisions on the vehicle's speed adjustments and lane changes to maintain safety and efficiency.
 
-The max speed limit is set to 49 miles per hour but if the target vehicle approaches another vehicle, then the target vehicle slows down (before implementing lane changing).
-### Dividing Track into Lanes
-The track is made of three four-meter lanes. In terms of Frenet coordinate, D, the lateral displacement from the yellow middle line, 0 < D < 4 is lane 1. 4 < D < 8 is lane 2 and 8 < D < 12 is lane 3. 
-### Start the Engine!
-The target vehicle starts from lane 2, the middle lane and tries to drive in the same lane untill it approaches a slower vehicle in the same lane. When a slower traffic is encountered, the vehicle first checks the left lane and its front and rear spaces in respect to the target vehicle. If there is not enough space, or the target vehicle is already in the left-most lane, the vehicle looks the right. If front and rear spaces are greater than the space needed for the target vehicle to safely enter into the new lane, change lane flag is triggered, changing the target lane to the new lane. 
+### Lane Analysis and Decision Making
+The model intelligently divides the track into three lanes and makes dynamic lane-changing decisions based on the traffic conditions detected through sensor fusion. This strategic consideration ensures optimal lane selection for speed and safety.
 
-The vehicle successfully drives aroud the track without any flag for over 4.32 miles. 
+### Implementation Highlights
+- Starts in the middle lane and dynamically adjusts to traffic conditions, prioritizing safety and efficiency.
+- Implements lane changing logic based on real-time traffic analysis, smoothly transitioning lanes when appropriate.
+- Successfully navigates the track, demonstrating the capability to drive autonomously for over 4.32 miles without incidents.
 
-Video: https://youtu.be/9-lzesHC8Uk
+### Watch the Drive
+Experience the autonomous navigation in action: [Path Planning Video](https://youtu.be/9-lzesHC8Uk)
+
+### Future Directions
+- **Enhanced Traffic Prediction**: Integrating more advanced ML models to predict the behaviors of surrounding vehicles for improved decision-making.
+- **Optimization Techniques**: Refining the spline interpolation and sensor fusion algorithms for even smoother path planning and better handling of complex traffic scenarios.
+- **Cross-Functional Collaboration**: Exploring opportunities to apply NLP for interpreting and responding to dynamic road conditions and signals as part of a comprehensive autonomous driving system.
